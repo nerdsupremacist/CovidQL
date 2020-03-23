@@ -14,6 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/nerdsupremacist/GraphZahl.git", from: "0.1.0-alpha.6"),
+        .package(url: "https://github.com/nerdsupremacist/Runtime.git", .branch("master")),
         .package(url: "https://github.com/nerdsupremacist/graphzahl-vapor-support.git", from: "0.1.0-alpha."),
     ],
     targets: [
