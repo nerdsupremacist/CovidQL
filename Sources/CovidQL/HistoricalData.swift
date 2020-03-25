@@ -2,6 +2,7 @@
 import Foundation
 import NIO
 import GraphZahl
+import BetterCodable
 
 private let dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
@@ -32,9 +33,9 @@ class Timeline: Decodable, GraphQLObject {
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let cases = try container.decode([String : IntIsh].self, forKey: .cases)
-        let deaths = try container.decode([String : IntIsh].self, forKey: .deaths)
-        let recovered = try container.decode([String : IntIsh].self, forKey: .recovered)
+        let cases = try container.decode([String : IntIsh]?.self, forKey: .cases) ?? [:]
+        let deaths = try container.decode([String : IntIsh]?.self, forKey: .deaths) ?? [:]
+        let recovered = try container.decode([String : IntIsh]?.self, forKey: .recovered) ?? [:]
 
         self.cases = cases.map { DataPoint(key: $0.key, value: $0.value.value) }
         self.deaths = deaths.map { DataPoint(key: $0.key, value: $0.value.value) }
