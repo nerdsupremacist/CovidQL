@@ -58,7 +58,7 @@ class HistoricalData: Decodable, GraphQLObject {
 
     let timeline: Timeline
 
-    func country(client: Client) throws -> EventLoopFuture<Country> {
+    func country(client: Client) throws -> EventLoopFuture<Country?> {
         guard let country = country else { throw Client.Error.emptyResponse }
         return client.country(name: country)
     }

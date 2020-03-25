@@ -28,8 +28,8 @@ class Client {
         return httpClient.get(url: "\(base)/countries").decode()
     }
 
-    func country(name: String) -> EventLoopFuture<Country> {
-        return httpClient.get(url: "\(base)/countries/\(name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)").decode()
+    func country(name: String) -> EventLoopFuture<Country?> {
+        return httpClient.get(url: "\(base)/countries/\(name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)").decodeOptional()
     }
 
     func historicalData() -> EventLoopFuture<[HistoricalData]> {
@@ -42,6 +42,10 @@ class Client {
 }
 
 extension EventLoopFuture where Value == HTTPClient.Response {
+
+    func decodeOptional<T: Decodable>() -> EventLoopFuture<T?> {
+        return decode(type: T?.self).flatMapErrorThrowing { _ in nil }
+    }
 
     func decode<T: Decodable>(type: T.Type = T.self) -> EventLoopFuture<T> {
         return flatMapThrowing { response in

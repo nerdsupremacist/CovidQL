@@ -8,7 +8,7 @@ struct IntIsh: Decodable {
         do {
             self.value = try Int(from: decoder)
         } catch {
-            self.value = Int(try String(from: decoder))!
+            self.value = Int(try String(from: decoder)) ?? 0
         }
     }
 }

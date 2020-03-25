@@ -17,7 +17,7 @@ enum CovidQL : GraphQLSchema {
             return client.all()
         }
 
-        func country(name: String) -> EventLoopFuture<Country> {
+        func country(name: String) -> EventLoopFuture<Country?> {
             return client.country(name: name)
         }
 
