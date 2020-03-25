@@ -33,16 +33,20 @@ class Timeline: Decodable, GraphQLObject {
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let cases = try container.decode([String : IntIsh]?.self, forKey: .cases) ?? [:]
-        let deaths = try container.decode([String : IntIsh]?.self, forKey: .deaths) ?? [:]
-        let recovered = try container.decode([String : IntIsh]?.self, forKey: .recovered) ?? [:]
-
-        self.cases = cases.map { DataPoint(key: $0.key, value: $0.value.value) }
-        self.deaths = deaths.map { DataPoint(key: $0.key, value: $0.value.value) }
-        self.recovered = recovered.map { DataPoint(key: $0.key, value: $0.value.value) }
+        self.cases = try container.decodeDataPoints(forKey: .cases)
+        self.deaths = try container.decodeDataPoints(forKey: .deaths)
+        self.recovered = try container.decodeDataPoints(forKey: .recovered)
     }
 }
 
+extension KeyedDecodingContainer {
+
+    fileprivate func decodeDataPoints(forKey key: K) throws -> [Timeline.DataPoint] {
+        let dictionary = try decode([String : IntIsh]?.self, forKey: key) ?? [:]
+        return dictionary.map { Timeline.DataPoint(key: $0.key, value: $0.value.value) }.sorted { $0.date < $1.date }
+    }
+
+}
 
 class TimelineWrapper: Decodable {
     let timeline: Timeline
