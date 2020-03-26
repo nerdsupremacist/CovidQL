@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/GraphZahl.git",
         "state": {
           "branch": null,
-          "revision": "26cae6c61bad5ad77f0478b45908e08e5b1a4b73",
-          "version": "0.1.0-alpha.6"
+          "revision": "b813b9c8c85fd859268a075460436080ab7ae3e0",
+          "version": "0.1.0-alpha.7"
         }
       },
       {
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/graphzahl-vapor-support.git",
         "state": {
           "branch": null,
-          "revision": "710a19422fe795b755172a9c6b1b1a44b74bf708",
-          "version": "0.1.0-alpha.2"
+          "revision": "11165592b707c54340b23f4dccf1bad33a74f8bc",
+          "version": "0.1.0-alpha.3"
         }
       },
       {
@@ -95,9 +95,9 @@
         "package": "Runtime",
         "repositoryURL": "https://github.com/nerdsupremacist/Runtime.git",
         "state": {
-          "branch": "master",
+          "branch": null,
           "revision": "ecfd946baba7baf7740760f1abe0e40066b44f2a",
-          "version": null
+          "version": "2.1.2-beta.2"
         }
       },
       {
@@ -177,8 +177,8 @@
         "repositoryURL": "https://github.com/vapor/vapor.git",
         "state": {
           "branch": null,
-          "revision": "8e95515373576fd95a059e5b68a1b98494ca2fce",
-          "version": "4.0.0-rc.3.10"
+          "revision": "cac009e6699b27b38335f69f9ce93d6b6c81f79f",
+          "version": "4.0.0-rc.3.11"
         }
       },
       {
