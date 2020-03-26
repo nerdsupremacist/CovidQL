@@ -20,6 +20,10 @@ let package = Package(
     targets: [
         .target(
             name: "CovidQL",
-            dependencies: ["GraphZahlVaporSupport", "GraphZahl"]),
+            dependencies: ["GraphZahlVaporSupport", "GraphZahl"],
+            swiftSettings: [
+                .unsafeFlags(["-Xcc", "-D_GNU_SOURCE=1"], .when(platforms: [.linux]))
+            ]
+        ),
     ]
 )
