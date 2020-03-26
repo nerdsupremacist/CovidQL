@@ -2,7 +2,6 @@
 import Foundation
 import NIO
 import GraphZahl
-import BetterCodable
 
 private let dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
