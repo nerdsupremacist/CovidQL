@@ -2,6 +2,33 @@
   "object": {
     "pins": [
       {
+        "package": "async-http-client",
+        "repositoryURL": "https://github.com/swift-server/async-http-client.git",
+        "state": {
+          "branch": null,
+          "revision": "e2636a4c24e646d3e480fc666da0c090818beb09",
+          "version": "1.1.0"
+        }
+      },
+      {
+        "package": "async-kit",
+        "repositoryURL": "https://github.com/vapor/async-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "1f145cffe2109d0fc420bc03b31dacf9de2c7573",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "console-kit",
+        "repositoryURL": "https://github.com/vapor/console-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "de99d83c9f3c298371002729cc0601e4b5d9e0c9",
+          "version": "4.0.0-rc.1"
+        }
+      },
+      {
         "package": "ContextKit",
         "repositoryURL": "https://github.com/nerdsupremacist/ContextKit.git",
         "state": {
@@ -29,6 +56,15 @@
         }
       },
       {
+        "package": "GraphQL",
+        "repositoryURL": "https://github.com/nerdsupremacist/GraphQL.git",
+        "state": {
+          "branch": null,
+          "revision": "649b14846a49f6fc5905cb0b287b84ca22c4c867",
+          "version": "0.12.1-beta.2"
+        }
+      },
+      {
         "package": "GraphZahl",
         "repositoryURL": "https://github.com/nerdsupremacist/GraphZahl.git",
         "state": {
@@ -47,12 +83,111 @@
         }
       },
       {
+        "package": "routing-kit",
+        "repositoryURL": "https://github.com/vapor/routing-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "dbc3eafdbe243e9a46eeb6fd7d99266bee52f89f",
+          "version": "4.0.0-rc.1"
+        }
+      },
+      {
         "package": "Runtime",
         "repositoryURL": "https://github.com/nerdsupremacist/Runtime.git",
         "state": {
           "branch": "master",
-          "revision": "31be7aa458b7deb7d642d03aee7be03c32f6c0ef",
+          "revision": "ecfd946baba7baf7740760f1abe0e40066b44f2a",
           "version": null
+        }
+      },
+      {
+        "package": "swift-backtrace",
+        "repositoryURL": "https://github.com/swift-server/swift-backtrace.git",
+        "state": {
+          "branch": null,
+          "revision": "eaf2cef011c0c23d1701aa60b364def8015dc3c7",
+          "version": "1.1.1"
+        }
+      },
+      {
+        "package": "swift-crypto",
+        "repositoryURL": "https://github.com/apple/swift-crypto.git",
+        "state": {
+          "branch": null,
+          "revision": "d67ac68d09a95443303e9d6e37b34e7ba101d5f1",
+          "version": "1.0.1"
+        }
+      },
+      {
+        "package": "swift-log",
+        "repositoryURL": "https://github.com/apple/swift-log.git",
+        "state": {
+          "branch": null,
+          "revision": "74d7b91ceebc85daf387ebb206003f78813f71aa",
+          "version": "1.2.0"
+        }
+      },
+      {
+        "package": "swift-metrics",
+        "repositoryURL": "https://github.com/apple/swift-metrics.git",
+        "state": {
+          "branch": null,
+          "revision": "708b960b4605abb20bc55d65abf6bad607252200",
+          "version": "2.0.0"
+        }
+      },
+      {
+        "package": "swift-nio",
+        "repositoryURL": "https://github.com/apple/swift-nio.git",
+        "state": {
+          "branch": null,
+          "revision": "a27a07719ca785bcaca019a5b9fe1814b981b4a2",
+          "version": "2.15.0"
+        }
+      },
+      {
+        "package": "swift-nio-extras",
+        "repositoryURL": "https://github.com/apple/swift-nio-extras.git",
+        "state": {
+          "branch": null,
+          "revision": "b4dbfacff47fb8d0f9e0a422d8d37935a9f10570",
+          "version": "1.4.0"
+        }
+      },
+      {
+        "package": "swift-nio-http2",
+        "repositoryURL": "https://github.com/apple/swift-nio-http2.git",
+        "state": {
+          "branch": null,
+          "revision": "82eb3fa0974b838358ee46bc6c5381e5ae5de6b9",
+          "version": "1.11.0"
+        }
+      },
+      {
+        "package": "swift-nio-ssl",
+        "repositoryURL": "https://github.com/apple/swift-nio-ssl.git",
+        "state": {
+          "branch": null,
+          "revision": "584c0d06c46233d3e1759695e5eff495b12edcd2",
+          "version": "2.7.0"
+        }
+      },
+      {
+        "package": "vapor",
+        "repositoryURL": "https://github.com/vapor/vapor.git",
+        "state": {
+          "branch": null,
+          "revision": "8e95515373576fd95a059e5b68a1b98494ca2fce",
+          "version": "4.0.0-rc.3.10"
+        }
+      },
+      {
+        "package": "websocket-kit",
+        "repositoryURL": "https://github.com/vapor/websocket-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "aac462481bcd3039d5db9a0fbe7f4e47eefe2295",
+          "version": "2.0.0-rc.1"
         }
       }
     ]

@@ -5,8 +5,8 @@ import NIO
 
 class Country: Decodable, GraphQLObject {
     class Info: Decodable, GraphQLObject {
-        let iso2: String
-        let iso3: String
+        let iso2: String?
+        let iso3: String?
         let flag: ImageURL
     }
 
@@ -21,6 +21,7 @@ class Country: Decodable, GraphQLObject {
         case active
         case critical
         case casesPerOneMillion
+        case deathsPerOneMillion
     }
 
     let name: String
@@ -32,7 +33,8 @@ class Country: Decodable, GraphQLObject {
     let recovered: Int
     let active: Int
     let critical: Int
-    let casesPerOneMillion: Int
+    let casesPerOneMillion: Double?
+    let deathsPerOneMillion: Double?
 
     func timeline(client: Client) throws -> EventLoopFuture<Timeline> {
         return client.timeline(for: name).map { $0.timeline }
