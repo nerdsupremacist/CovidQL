@@ -23,25 +23,22 @@ class Timeline: Decodable, GraphQLObject {
     enum CodingKeys: String, CodingKey {
         case cases
         case deaths
-        case recovered
     }
 
     let cases: [DataPoint]
     let deaths: [DataPoint]
-    let recovered: [DataPoint]
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.cases = try container.decodeDataPoints(forKey: .cases)
         self.deaths = try container.decodeDataPoints(forKey: .deaths)
-        self.recovered = try container.decodeDataPoints(forKey: .recovered)
     }
 }
 
 extension KeyedDecodingContainer {
 
     fileprivate func decodeDataPoints(forKey key: K) throws -> [Timeline.DataPoint] {
-        let dictionary = try decode([String : IntIsh]?.self, forKey: key) ?? [:]
+        let dictionary = try decodeIfPresent([String : IntIsh].self, forKey: key) ?? [:]
         return dictionary.map { Timeline.DataPoint(key: $0.key, value: $0.value.value) }.sorted { $0.date < $1.date }
     }
 

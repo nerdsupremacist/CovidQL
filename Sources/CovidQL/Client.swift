@@ -33,11 +33,11 @@ class Client {
     }
 
     func historicalData() -> EventLoopFuture<[HistoricalData]> {
-        return httpClient.get(url: "\(base)/historical").decode()
+        return httpClient.get(url: "\(base)/v2/historical").decode()
     }
 
     func timeline(for name: String) -> EventLoopFuture<TimelineWrapper> {
-        return httpClient.get(url: "\(base)/historical/\(name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)").decode()
+        return httpClient.get(url: "\(base)/v2/historical/\(name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)").decode()
     }
 }
 
