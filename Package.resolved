@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/swift-server/async-http-client.git",
         "state": {
           "branch": null,
-          "revision": "e2636a4c24e646d3e480fc666da0c090818beb09",
-          "version": "1.1.0"
+          "revision": "037b70291941fe43de668066eb6fb802c5e181d2",
+          "version": "1.1.1"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/vapor/console-kit.git",
         "state": {
           "branch": null,
-          "revision": "de99d83c9f3c298371002729cc0601e4b5d9e0c9",
-          "version": "4.0.0-rc.1"
+          "revision": "7a97a5ea7fefe61cf2c943242113125b0f396a98",
+          "version": "4.1.0"
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/GraphQL.git",
         "state": {
           "branch": null,
-          "revision": "649b14846a49f6fc5905cb0b287b84ca22c4c867",
-          "version": "0.12.1-beta.2"
+          "revision": "2bb4e710f0de96a515f10812780b790c531ec6e5",
+          "version": "0.12.1-beta.3"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/GraphZahl.git",
         "state": {
           "branch": null,
-          "revision": "b813b9c8c85fd859268a075460436080ab7ae3e0",
-          "version": "0.1.0-alpha.7"
+          "revision": "6ec344c28c09b3d11ddda083fca3634ffd93d4d8",
+          "version": "0.1.0-alpha.15"
         }
       },
       {
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/graphzahl-vapor-support.git",
         "state": {
           "branch": null,
-          "revision": "11165592b707c54340b23f4dccf1bad33a74f8bc",
-          "version": "0.1.0-alpha.3"
+          "revision": "1a81d9cd3c540bad43d257828d0887f05587b232",
+          "version": "0.1.0-alpha.4"
         }
       },
       {
@@ -87,8 +87,8 @@
         "repositoryURL": "https://github.com/vapor/routing-kit.git",
         "state": {
           "branch": null,
-          "revision": "dbc3eafdbe243e9a46eeb6fd7d99266bee52f89f",
-          "version": "4.0.0-rc.1"
+          "revision": "35da702471cbcc308f58d38aa8fea971fa3fb166",
+          "version": "4.0.0"
         }
       },
       {
@@ -96,8 +96,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/Runtime.git",
         "state": {
           "branch": null,
-          "revision": "ecfd946baba7baf7740760f1abe0e40066b44f2a",
-          "version": "2.1.2-beta.2"
+          "revision": "dcc597b71ea4683027a35e527b4f3882437fccaa",
+          "version": "2.1.2-beta.6"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/swift-server/swift-backtrace.git",
         "state": {
           "branch": null,
-          "revision": "eaf2cef011c0c23d1701aa60b364def8015dc3c7",
-          "version": "1.1.1"
+          "revision": "f2fd8c4845a123419c348e0bc4b3839c414077d5",
+          "version": "1.2.0"
         }
       },
       {
@@ -168,8 +168,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-ssl.git",
         "state": {
           "branch": null,
-          "revision": "584c0d06c46233d3e1759695e5eff495b12edcd2",
-          "version": "2.7.0"
+          "revision": "ae213938e151964aa691f0e902462fbe06baeeb6",
+          "version": "2.7.1"
         }
       },
       {
@@ -177,8 +177,8 @@
         "repositoryURL": "https://github.com/vapor/vapor.git",
         "state": {
           "branch": null,
-          "revision": "cac009e6699b27b38335f69f9ce93d6b6c81f79f",
-          "version": "4.0.0-rc.3.11"
+          "revision": "ad2aeccfbdd1275c0a8817a8024f0b98d65e3880",
+          "version": "4.0.0-rc.3.12"
         }
       },
       {
@@ -186,8 +186,8 @@
         "repositoryURL": "https://github.com/vapor/websocket-kit.git",
         "state": {
           "branch": null,
-          "revision": "aac462481bcd3039d5db9a0fbe7f4e47eefe2295",
-          "version": "2.0.0-rc.1"
+          "revision": "f46778e3f1452cc80a0a6c422cdc52a5d0258795",
+          "version": "2.0.0"
         }
       }
     ]

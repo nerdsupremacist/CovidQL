@@ -13,16 +13,12 @@ let package = Package(
             targets: ["CovidQL"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/nerdsupremacist/GraphZahl.git", from: "0.1.0-alpha.7"),
-        .package(url: "https://github.com/nerdsupremacist/graphzahl-vapor-support.git", from: "0.1.0-alpha.3"),
+        .package(url: "https://github.com/nerdsupremacist/graphzahl-vapor-support.git", from: "0.1.0-alpha.4"),
     ],
     targets: [
         .target(
             name: "CovidQL",
-            dependencies: ["GraphZahlVaporSupport", "GraphZahl"],
-            swiftSettings: [
-                .unsafeFlags(["-Xcc", "-D_GNU_SOURCE=1"], .when(platforms: [.linux]))
-            ]
+            dependencies: ["GraphZahlVaporSupport"]
         ),
     ]
 )
