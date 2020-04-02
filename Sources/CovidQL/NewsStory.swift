@@ -8,7 +8,6 @@ class NewsStory: Decodable, GraphQLObject {
     let author, overview: String?
     let url: URL
     let image: ImageURL?
-    let published: Date
     let content: String?
 
     enum CodingKeys: String, CodingKey {
@@ -16,7 +15,6 @@ class NewsStory: Decodable, GraphQLObject {
         case overview = "description"
         case url, content
         case image = "urlToImage"
-        case published = "publishedAt"
     }
 }
 
