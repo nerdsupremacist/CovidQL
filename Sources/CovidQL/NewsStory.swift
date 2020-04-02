@@ -6,7 +6,10 @@ class NewsStory: Decodable, GraphQLObject {
     let source: Source
     let title: String
     let author, overview: String?
-    let url: URL
+
+    @CustomURL
+    var url: URL
+
     let image: ImageURL?
     let content: String?
 
