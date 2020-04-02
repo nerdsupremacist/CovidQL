@@ -10,4 +10,4 @@ This was made using [GraphZahl](https://github.com/nerdsupremacist/GraphZahl) an
 
 It's querying [NovelCOVID](https://github.com/novelcovid/api) which is itself querying [Worldmeter](https://www.worldometers.info/coronavirus/).
 
-It's also delivering news for covid in each country using (NewsAPI)[https://newsapi.org].
+It's also delivering news for covid in each country using [NewsAPI](https://newsapi.org).
