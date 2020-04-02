@@ -22,6 +22,7 @@ class Country: Decodable, GraphQLObject {
         case critical
         case casesPerOneMillion
         case deathsPerOneMillion
+        case updated
     }
 
     let name: String
@@ -35,8 +36,13 @@ class Country: Decodable, GraphQLObject {
     let critical: Int
     let casesPerOneMillion: Double?
     let deathsPerOneMillion: Double?
+    let updated: Timestamp
 
     func timeline(client: Client) throws -> EventLoopFuture<Timeline> {
         return client.timeline(for: name).map { $0.timeline }
+    }
+
+    func news(client: Client) -> EventLoopFuture<[NewsStory]> {
+        return client.stories(country: info.iso2 ?? name).map { $0.articles }
     }
 }

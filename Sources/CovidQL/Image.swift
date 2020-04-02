@@ -25,7 +25,10 @@ extension ImageURL: GraphQLScalar {
 extension ImageURL: Decodable {
 
     init(from decoder: Decoder) throws {
-        guard let url = URL(string: try String(from: decoder)) else { throw Client.Error.failedDecoding }
+        let string = try String(from: decoder)
+        guard let url = URL(string: string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed.union(.urlHostAllowed).union(.urlQueryAllowed)) ?? string) else {
+            throw Client.Error.failedDecoding
+        }
         self.url = url
     }
 
