@@ -13,7 +13,7 @@ let newsBase = "https://newsapi.org/v2/"
 
 app.routes.graphql(use: CovidQL.self, includeGraphiQL: true) { (request: Request) -> Client in
     #if os(Linux)
-    let ipAddress = request.headers.firstValue(name: "X-Forwarded-For") ?? request.remoteAddress?.ipAddress
+    let ipAddress = request.headers.firstValue(name: HTTPHeaders.Name("X-Forwarded-For")) ?? request.remoteAddress?.ipAddress
     #else
     let ipAddress = request.headers.forwarded.first?.for ?? request.remoteAddress?.ipAddress
     #endif
