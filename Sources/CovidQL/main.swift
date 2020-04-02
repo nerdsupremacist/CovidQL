@@ -12,8 +12,9 @@ let ipAPIBase = "https://api.ipgeolocation.io/"
 let newsBase = "https://newsapi.org/v2/"
 
 app.routes.graphql(use: CovidQL.self, includeGraphiQL: true) { (request: Request) -> Client in
-    let ipAddress = request.headers[.xForwardedFor].first ?? request.remoteAddress?.ipAddress
-    return Client(ipAddress: ipAddress,
+    let forwardedIp = request.headers[.xForwardedFor].first
+    let remoteIpAddress = request.remoteAddress?.ipAddress
+    return Client(ipAddress: forwardedIp ?? remoteIpAddress,
                   covidBase: covidBase,
                   ipAPIBase: ipAPIBase,
                   ipAPIKey: "eee9c9c23de44033a19b44be776e3a42",
