@@ -7,10 +7,14 @@ import GraphZahlVaporSupport
 import Runtime
 
 let app = Application(try .detect())
-let base = "https://corona.lmao.ninja"
+let covidBase = "https://corona.lmao.ninja"
+let ipAPIBase = "https://ipapi.co"
 
 app.routes.graphql(use: CovidQL.self, includeGraphiQL: true) { request in
-    return Client(base: base, httpClient: HTTPClient(eventLoopGroupProvider: .shared(request.eventLoop)))
+    return Client(ipAddress: request.remoteAddress?.ipAddress,
+                  covidBase: covidBase,
+                  ipAPIBase: ipAPIBase,
+                  httpClient: HTTPClient(eventLoopGroupProvider: .shared(request.eventLoop)))
 }
 
 try app.run()

@@ -13,8 +13,18 @@ enum CovidQL : GraphQLSchema {
             return client.countries()
         }
 
-        func current() -> EventLoopFuture<CurrentState> {
+        func world() -> EventLoopFuture<World> {
             return client.all()
+        }
+
+        func myCountry() -> EventLoopFuture<Country?> {
+            let client = self.client
+            return client
+                .myCountry()
+                .flatMap { country in
+                    guard let country = country else { return client.eventLoop.future(nil) }
+                    return client.country(name: country)
+                }
         }
 
         func country(name: String) -> EventLoopFuture<Country?> {

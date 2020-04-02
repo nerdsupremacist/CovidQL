@@ -8,11 +8,19 @@ class Client {
         case failedDecoding
     }
 
-    private let base: String
+    private let ipAddress: String?
+    private let covidBase: String
+    private let ipAPIBase: String
     private let httpClient: HTTPClient
 
-    init(base: String, httpClient: HTTPClient) {
-        self.base = base
+    var eventLoop: EventLoopGroup {
+        return httpClient.eventLoopGroup
+    }
+
+    init(ipAddress: String?, covidBase: String, ipAPIBase: String, httpClient: HTTPClient) {
+        self.ipAddress = ipAddress
+        self.covidBase = covidBase
+        self.ipAPIBase = ipAPIBase
         self.httpClient = httpClient
     }
 
@@ -20,24 +28,40 @@ class Client {
         try! httpClient.syncShutdown()
     }
 
-    func all() -> EventLoopFuture<CurrentState> {
-        return httpClient.get(url: "\(base)/all").decode()
+    func all() -> EventLoopFuture<World> {
+        return httpClient.get(url: "\(covidBase)/all").decode()
     }
 
     func countries() -> EventLoopFuture<[Country]> {
-        return httpClient.get(url: "\(base)/countries").decode()
+        return httpClient.get(url: "\(covidBase)/countries").decode()
+    }
+
+    func myCountry() -> EventLoopFuture<String?> {
+        guard let ipAddress = ipAddress else { return httpClient.eventLoopGroup.future(nil) }
+        return httpClient.get(url: "\(ipAPIBase)/\(ipAddress)/country/").flatMapThrowing { response in
+            guard let buffer = response.body else {
+                throw Client.Error.emptyResponse
+            }
+
+            let length = buffer.readableBytes
+            return buffer.getString(at: 0, length: length)
+        }
     }
 
     func country(name: String) -> EventLoopFuture<Country?> {
-        return httpClient.get(url: "\(base)/countries/\(name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)").decodeOptional()
+        return httpClient.get(url: "\(covidBase)/countries/\(name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)").decodeOptional()
     }
 
     func historicalData() -> EventLoopFuture<[HistoricalData]> {
-        return httpClient.get(url: "\(base)/v2/historical").decode()
+        return httpClient.get(url: "\(covidBase)/v2/historical").decode()
+    }
+
+    func timeline() -> EventLoopFuture<Timeline> {
+        return httpClient.get(url: "\(covidBase)/v2/historical/all").decode()
     }
 
     func timeline(for name: String) -> EventLoopFuture<TimelineWrapper> {
-        return httpClient.get(url: "\(base)/v2/historical/\(name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)").decode()
+        return httpClient.get(url: "\(covidBase)/v2/historical/\(name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)").decode()
     }
 }
 
