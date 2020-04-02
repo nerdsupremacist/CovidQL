@@ -13,12 +13,13 @@ let package = Package(
             targets: ["CovidQL"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0-rc.3.12"),
         .package(url: "https://github.com/nerdsupremacist/graphzahl-vapor-support.git", from: "0.1.0-alpha.4"),
     ],
     targets: [
         .target(
             name: "CovidQL",
-            dependencies: ["GraphZahlVaporSupport"]
+            dependencies: ["GraphZahlVaporSupport", "Vapor"]
         ),
     ]
 )
