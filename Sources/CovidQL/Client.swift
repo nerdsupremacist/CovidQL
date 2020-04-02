@@ -44,6 +44,7 @@ class Client {
 
     func locateUser() -> EventLoopFuture<GeoLocated?> {
         guard let ipAddress = ipAddress else { return httpClient.eventLoopGroup.future(nil) }
+        print("IP Address: \(ipAddress)")
         return httpClient.get(url: "\(ipAPIBase)/ipgeo?apiKey=\(ipAPIKey)&ip=\(ipAddress)").decodeOptional()
     }
 
