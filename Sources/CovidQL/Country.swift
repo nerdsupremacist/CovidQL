@@ -5,9 +5,17 @@ import NIO
 
 class Country: Decodable, GraphQLObject {
     class Info: Decodable, GraphQLObject {
+        enum CodingKeys: String, CodingKey {
+            case iso2, iso3, flag
+            case latitude = "lat"
+            case longitude = "long"
+        }
+
         let iso2: String?
         let iso3: String?
         let flag: ImageURL
+        let latitude: Double?
+        let longitude: Double?
     }
 
     enum CodingKeys: String, CodingKey {
