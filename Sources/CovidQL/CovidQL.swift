@@ -10,7 +10,7 @@ enum CovidQL : GraphQLSchema {
         let client: Client
 
         func countries() -> EventLoopFuture<[Country]> {
-            return client.countries()
+            return client.countries().map { $0.filter { $0.info.latitude != 0 || $0.info.longitude != 0 } }
         }
 
         func world() -> EventLoopFuture<World> {
