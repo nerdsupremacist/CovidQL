@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/GraphQL.git",
         "state": {
           "branch": null,
-          "revision": "2bb4e710f0de96a515f10812780b790c531ec6e5",
-          "version": "0.12.1-beta.3"
+          "revision": "2bbd17e9c0c8319d0539c6f5b377b1348c8327b2",
+          "version": "0.12.1-beta.4"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/GraphZahl.git",
         "state": {
           "branch": null,
-          "revision": "6ec344c28c09b3d11ddda083fca3634ffd93d4d8",
-          "version": "0.1.0-alpha.15"
+          "revision": "897cebbbd87e3ce925bc8517b14da919e345ec75",
+          "version": "0.1.0-alpha.16"
         }
       },
       {
@@ -96,8 +96,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/Runtime.git",
         "state": {
           "branch": null,
-          "revision": "dcc597b71ea4683027a35e527b4f3882437fccaa",
-          "version": "2.1.2-beta.6"
+          "revision": "7ff7de69a6309726a68360556d85c73ec431585b",
+          "version": "2.1.2-beta.7"
         }
       },
       {
@@ -141,8 +141,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio.git",
         "state": {
           "branch": null,
-          "revision": "a27a07719ca785bcaca019a5b9fe1814b981b4a2",
-          "version": "2.15.0"
+          "revision": "e876fb37410e0036b98b5361bb18e6854739572b",
+          "version": "2.16.0"
         }
       },
       {
