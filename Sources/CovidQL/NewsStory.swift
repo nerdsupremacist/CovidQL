@@ -10,7 +10,8 @@ class NewsStory: Decodable, GraphQLObject {
     @CustomURL
     var url: URL
 
-    let image: ImageURL?
+    @EmptyStringIsNil
+    var image: ImageURL?
     let content: String?
 
     enum CodingKeys: String, CodingKey {
