@@ -7,7 +7,7 @@ struct EmptyStringIsNil<Value: Decodable> : Decodable {
     var wrappedValue: Value?
 
     init(from decoder: Decoder) throws {
-        let string = try String(from: decoder)
+        let string = try Optional<String>(from: decoder)
         if string == "" {
             wrappedValue = nil
         } else {
