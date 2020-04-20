@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/vapor/async-kit.git",
         "state": {
           "branch": null,
-          "revision": "1f145cffe2109d0fc420bc03b31dacf9de2c7573",
-          "version": "1.0.0"
+          "revision": "48a719dec79ea3cbbc71ca9b29f69df7cd5794cd",
+          "version": "1.0.1"
         }
       },
       {
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/graphzahl-vapor-support.git",
         "state": {
           "branch": null,
-          "revision": "1a81d9cd3c540bad43d257828d0887f05587b232",
-          "version": "0.1.0-alpha.4"
+          "revision": "619dcd6a32c076ee7a80f37f09c967d56aae324c",
+          "version": "0.1.0-alpha.6"
         }
       },
       {
@@ -87,8 +87,8 @@
         "repositoryURL": "https://github.com/vapor/routing-kit.git",
         "state": {
           "branch": null,
-          "revision": "35da702471cbcc308f58d38aa8fea971fa3fb166",
-          "version": "4.0.0"
+          "revision": "ee590c42d0b74fb6644c5ec128a2edc86c2858ff",
+          "version": "4.0.1"
         }
       },
       {
@@ -177,8 +177,8 @@
         "repositoryURL": "https://github.com/vapor/vapor.git",
         "state": {
           "branch": null,
-          "revision": "ad2aeccfbdd1275c0a8817a8024f0b98d65e3880",
-          "version": "4.0.0-rc.3.12"
+          "revision": "948f363fdeb8739200f4341810c26e88704e63f3",
+          "version": "4.3.0"
         }
       },
       {
