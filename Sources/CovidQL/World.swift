@@ -3,13 +3,18 @@ import Foundation
 import GraphZahl
 import NIO
 
-class World: Decodable, GraphQLObject {
-    let cases: Int
-    let deaths: Int
-    let recovered: Int
-    let active: Int
+class World: DetailedAffected {
+    private enum CodingKeys: String, CodingKey {
+        case affectedCountries
+    }
+
     let affectedCountries: Int
-    let updated: Timestamp
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.affectedCountries = try container.decode(Int.self, forKey: .affectedCountries)
+        try super.init(from: decoder)
+    }
 
     func timeline(client: Client) throws -> EventLoopFuture<Timeline> {
         return client.timeline()

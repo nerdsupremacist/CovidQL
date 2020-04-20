@@ -53,12 +53,12 @@ class TimelineWrapper: Decodable {
 
 class HistoricalData: Decodable, GraphQLObject {
     @Ignore
-    var country: String?
+    var country: Identifier<Country>?
 
     let timeline: Timeline
 
-    func country(client: Client) throws -> EventLoopFuture<Country?> {
+    func country(client: Client) throws -> EventLoopFuture<Country> {
         guard let country = country else { throw Client.Error.emptyResponse }
-        return client.country(name: country)
+        return client.country(identifier: country)
     }
 }

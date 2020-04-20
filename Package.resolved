@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/GraphQL.git",
         "state": {
           "branch": null,
-          "revision": "2bbd17e9c0c8319d0539c6f5b377b1348c8327b2",
-          "version": "0.12.1-beta.4"
+          "revision": "253b6efa4fdac99a0feef631023232729864a7c1",
+          "version": "0.12.1-beta.6"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/GraphZahl.git",
         "state": {
           "branch": null,
-          "revision": "ce44786c56fd741837b18fc3c1e4c87659d4be27",
-          "version": "0.1.0-alpha.18"
+          "revision": "a439ed62e6a1197325a1aac1679ba4f20869e76a",
+          "version": "0.1.0-alpha.24"
         }
       },
       {
@@ -96,8 +96,8 @@
         "repositoryURL": "https://github.com/nerdsupremacist/Runtime.git",
         "state": {
           "branch": null,
-          "revision": "ce627eaea2b1aae130650929553d3d88cb1e1938",
-          "version": "2.1.2-beta.8"
+          "revision": "3c87a4e966baff36c8d0bc35620f833a55c6f201",
+          "version": "2.1.2-beta.10"
         }
       },
       {

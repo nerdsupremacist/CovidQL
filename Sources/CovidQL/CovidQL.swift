@@ -13,6 +13,10 @@ enum CovidQL : GraphQLSchema {
             return client.countries().map { $0.filter { $0.info.latitude != 0 || $0.info.longitude != 0 }.sorted { $0.cases > $1.cases } }
         }
 
+        func continents() -> EventLoopFuture<[Continent]> {
+            return client.continents().map { $0.sorted { $0.cases > $1.cases } }
+        }
+
         func world() -> EventLoopFuture<World> {
             return client.all()
         }
@@ -23,12 +27,16 @@ enum CovidQL : GraphQLSchema {
                 .locateUser()
                 .flatMap { location in
                     guard let location = location else { return client.eventLoop.future(nil) }
-                    return client.country(name: location.countryCode)
+                    return client.country(identifier: Identifier(rawValue: location.countryCode)).map(Optional.some)
                 }
         }
 
-        func country(name: String) -> EventLoopFuture<Country?> {
-            return client.country(name: name)
+        func country(identifier: Identifier<Country>) -> EventLoopFuture<Country> {
+            return client.country(identifier: identifier)
+        }
+
+        func continent(identifier: Identifier<Continent>) -> EventLoopFuture<DetailedContinent> {
+            return client.continent(identifier: identifier)
         }
 
         func historicalData() -> EventLoopFuture<[HistoricalData]> {
