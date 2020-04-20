@@ -13,15 +13,6 @@ let covidBase = "https://corona.lmao.ninja"
 let ipAPIBase = "https://api.ipgeolocation.io/"
 let newsBase = "https://newsapi.org/v2/"
 
-try CovidQL.prepare(viewerContext: Client.client())
-
-app.routes.graphql(use: CovidQL.self, includeGraphiQL: true) { (request: Request) -> Client in
-    Client.client(for: request)
-}
-
-try app.run()
-
-
 extension Client {
 
     static func client(for request: Request? = nil) -> Client {
@@ -40,3 +31,12 @@ extension Client {
     }
 
 }
+
+
+try CovidQL.prepare(viewerContext: Client.client())
+
+app.routes.graphql(use: CovidQL.self, includeGraphiQL: true) { (request: Request) -> Client in
+    Client.client(for: request)
+}
+
+try app.run()
