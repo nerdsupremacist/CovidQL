@@ -48,7 +48,6 @@ class Client {
 
     func locateUser() -> EventLoopFuture<GeoLocated?> {
         guard let ipAddress = ipAddress else { return httpClient.eventLoopGroup.future(nil) }
-        print("IP Address: \(ipAddress)")
         return httpClient.get(url: "\(ipAPIBase)/ipgeo?apiKey=\(ipAPIKey)&ip=\(ipAddress)").decodeOptional()
     }
 
@@ -61,17 +60,16 @@ class Client {
     }
 
     func country(identifier: Identifier<Country>) -> EventLoopFuture<Country> {
-        return httpClient.get(url: "\(covidBase)/v2/countries/\(identifier.rawValue.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)").decode()
+        return httpClient.get(url: "\(covidBase)/v2/countries/\(identifier: identifier)").decode()
     }
 
     func continent(identifier: Identifier<Continent>) -> EventLoopFuture<DetailedContinent> {
-        return httpClient.get(url: "\(covidBase)/v2/continents/\(identifier.rawValue.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)").decode()
+        return httpClient.get(url: "\(covidBase)/v2/continents/\(identifier: identifier)").decode()
     }
 
     func countries(identifiers: [Identifier<Country>]) -> EventLoopFuture<[Country]> {
         if identifiers.count > 1 {
-            let countries = identifiers.map { $0.rawValue.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)! }.joined(separator: ",")
-            return httpClient.get(url: "\(covidBase)/v2/countries/\(countries)").decode()
+            return httpClient.get(url: "\(covidBase)/v2/countries/\(identifiers: identifiers)").decode()
         } else if let identifier = identifiers.first {
             return country(identifier: identifier).map { [$0] }
         } else {
@@ -80,16 +78,38 @@ class Client {
     }
 
     func historicalData() -> EventLoopFuture<[HistoricalData]> {
-        return httpClient.get(url: "\(covidBase)/v2/historical").decode()
+        return httpClient.get(url: "\(covidBase)/v2/historical?lastdays=all").decode()
     }
 
     func timeline() -> EventLoopFuture<Timeline> {
-        return httpClient.get(url: "\(covidBase)/v2/historical/all").decode()
+        return httpClient.get(url: "\(covidBase)/v2/historical/all?lastdays=all").decode()
     }
 
     func timeline<T : Identifiable>(for identifier: Identifier<T>) -> EventLoopFuture<TimelineWrapper> {
-        return httpClient.get(url: "\(covidBase)/v2/historical/\(identifier.rawValue.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)").decode()
+        return httpClient
+            .get(url: "\(covidBase)/v2/historical/\(identifier: identifier)?lastdays=all")
+            .decode()
     }
+}
+
+extension String.StringInterpolation {
+
+    fileprivate mutating func appendInterpolation<T : Identifiable>(identifier: Identifier<T>) {
+        appendInterpolation(identifier.urlSafe)
+    }
+
+    fileprivate mutating func appendInterpolation<T : Identifiable>(identifiers: [Identifier<T>]) {
+        appendInterpolation(identifiers.map { $0.urlSafe }.joined(separator: ","))
+    }
+
+}
+
+extension Identifier {
+
+    fileprivate var urlSafe: String {
+        return rawValue.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!
+    }
+
 }
 
 extension EventLoopFuture where Value == HTTPClient.Response {
