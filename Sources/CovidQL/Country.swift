@@ -16,6 +16,17 @@ class Country: DetailedAffected, Identifiable {
         let flag: ImageURL
         let latitude: Double?
         let longitude: Double?
+
+        var emoji: String? {
+            return iso2.map { iso2 in
+                return iso2.uppercased().unicodeScalars.reduce("") { result, item in
+                    guard let scalar = UnicodeScalar(127397 + item.value) else {
+                        return result
+                    }
+                    return result + String(scalar)
+                }
+            }
+        }
     }
 
     private enum CodingKeys: String, CodingKey {
