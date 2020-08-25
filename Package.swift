@@ -19,6 +19,7 @@ let package = Package(
         .target(
             name: "CovidQL",
             dependencies: [
+                "GraphZahl",
                 .product(name: "GraphZahlVaporSupport", package: "graphzahl-vapor-support"),
             ]
         ),
