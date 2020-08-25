@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -12,13 +12,15 @@ let package = Package(
             targets: ["CovidQL"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/nerdsupremacist/GraphZahl.git", from: "0.1.0-alpha.24"),
-        .package(url: "https://github.com/nerdsupremacist/graphzahl-vapor-support.git", from: "0.1.0-alpha.6"),
+        .package(url: "https://github.com/nerdsupremacist/GraphZahl.git", from: "0.1.0-alpha.35"),
+        .package(url: "https://github.com/nerdsupremacist/graphzahl-vapor-support.git", from: "0.1.0-alpha.7"),
     ],
     targets: [
         .target(
             name: "CovidQL",
-            dependencies: ["GraphZahlVaporSupport"]
+            dependencies: [
+                .product(name: "GraphZahlVaporSupport", package: "graphzahl-vapor-support"),
+            ]
         ),
     ]
 )
