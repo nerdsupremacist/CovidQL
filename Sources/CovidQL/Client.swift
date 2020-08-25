@@ -31,7 +31,11 @@ class Client {
     }
 
     deinit {
-//        try! httpClient.syncShutdown()
+        do {
+            try httpClient.syncShutdown()
+        } catch {
+            print("Error shutting down client \(error)")
+        }
     }
 
     func all() -> EventLoopFuture<World> {
