@@ -31,7 +31,7 @@ class Client {
     }
 
     deinit {
-        try! httpClient.syncShutdown()
+//        try! httpClient.syncShutdown()
     }
 
     func all() -> EventLoopFuture<World> {
