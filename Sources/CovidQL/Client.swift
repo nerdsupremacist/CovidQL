@@ -31,9 +31,9 @@ class Client {
     }
 
     deinit {
-        do {
-            try httpClient.syncShutdown()
-        } catch {
+        httpClient.shutdown { [httpClient] error in
+            _ = httpClient
+            guard let error = error else { return }
             print("Error shutting down client \(error)")
         }
     }
