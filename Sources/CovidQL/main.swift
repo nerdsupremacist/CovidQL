@@ -16,11 +16,11 @@ let newsBase = "https://newsapi.org/v2/"
 extension Client {
 
     static func client(for request: Request? = nil) -> Client {
-        #if os(Linux)
-        let ipAddress = request?.headers.firstValue(name: HTTPHeaders.Name("X-Forwarded-For")) ?? request?.remoteAddress?.ipAddress
-        #else
+//        #if os(Linux)
+//        let ipAddress = request?.headers.firstValue(name: HTTPHeaders.Name("X-Forwarded-For")) ?? request?.remoteAddress?.ipAddress
+//        #else
         let ipAddress = request?.headers.forwarded.first?.for ?? request?.remoteAddress?.ipAddress
-        #endif
+//        #endif
         return Client(ipAddress: ipAddress,
                       covidBase: covidBase,
                       ipAPIBase: ipAPIBase,
