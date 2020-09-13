@@ -20,6 +20,15 @@
         }
       },
       {
+        "package": "Cache",
+        "repositoryURL": "https://github.com/nerdsupremacist/Cache.git",
+        "state": {
+          "branch": "master",
+          "revision": "c92bdd461291fffab3e358742cf46d3694b56932",
+          "version": null
+        }
+      },
+      {
         "package": "console-kit",
         "repositoryURL": "https://github.com/vapor/console-kit.git",
         "state": {

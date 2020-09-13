@@ -55,6 +55,14 @@ class Country: DetailedAffected, Identifiable {
         return Identifier(rawValue: name)
     }
 
+    func place(client: Client) -> EventLoopFuture<Int> {
+        return client
+            .countries()
+            .map { $0.filter { $0.info.latitude != 0 || $0.info.longitude != 0 }.sorted { $0.cases > $1.cases } }
+            .map { $0.firstIndex { $0.identifier == self.identifier } ?? $0.count }
+            .map { $0 + 1 }
+    }
+
     func continent(client: Client) -> EventLoopFuture<DetailedContinent> {
         return client.continent(identifier: continentIdentifier)
     }

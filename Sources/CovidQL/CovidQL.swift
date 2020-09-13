@@ -9,8 +9,11 @@ enum CovidQL : GraphQLSchema {
     class Query: QueryType {
         let client: Client
 
-        func countries() -> EventLoopFuture<[Country]> {
-            return client.countries().map { $0.filter { $0.info.latitude != 0 || $0.info.longitude != 0 }.sorted { $0.cases > $1.cases } }
+        func countries() -> EventLoopFuture<PagingArray<Country>> {
+            return client
+                .countries()
+                .map { $0.filter { $0.info.latitude != 0 || $0.info.longitude != 0 }.sorted { $0.cases > $1.cases } }
+                .map { PagingArray(values: $0) }
         }
 
         func continents() -> EventLoopFuture<[Continent]> {
@@ -39,8 +42,8 @@ enum CovidQL : GraphQLSchema {
             return client.continent(identifier: identifier)
         }
 
-        func historicalData() -> EventLoopFuture<[HistoricalData]> {
-            return client.historicalData()
+        func historicalData() -> EventLoopFuture<PagingArray<HistoricalData>> {
+            return client.historicalData().map { PagingArray(values: $0) }
         }
 
         required init(viewerContext client: Client) {

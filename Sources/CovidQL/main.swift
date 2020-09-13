@@ -5,8 +5,11 @@ import NIO
 import Vapor
 import GraphZahlVaporSupport
 import Runtime
+import Cache
 
 let clientEventLoop = MultiThreadedEventLoopGroup(numberOfThreads: 10)
+let cacheConfig = MemoryConfig(expiry: .never, countLimit: 500, totalCostLimit: 100_000)
+let cache = MemoryStorage<String, Any>(config: cacheConfig)
 
 let app = Application(try .detect())
 let covidBase = "https://corona.lmao.ninja"
@@ -23,6 +26,7 @@ extension Client {
                       ipAPIKey: "eee9c9c23de44033a19b44be776e3a42",
                       newsBase: newsBase,
                       newsAPIKey: "8189f8976f2846ee8985371ff84d580a",
+                      cache: cache,
                       httpClient: HTTPClient(eventLoopGroupProvider: .shared(clientEventLoop)))
     }
 

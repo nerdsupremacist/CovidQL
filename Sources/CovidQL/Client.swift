@@ -1,6 +1,7 @@
 
 import Foundation
 import Vapor
+import Cache
 
 class Client {
     enum Error: Swift.Error {
@@ -14,19 +15,29 @@ class Client {
     private let ipAPIKey: String
     private let newsBase: String
     private let newsAPIKey: String
+    private let cache: MemoryStorage<String, Any>?
     private let httpClient: HTTPClient
 
     var eventLoop: EventLoopGroup {
         return httpClient.eventLoopGroup
     }
 
-    init(ipAddress: String?, covidBase: String, ipAPIBase: String, ipAPIKey: String, newsBase: String, newsAPIKey: String, httpClient: HTTPClient) {
+    init(ipAddress: String?,
+         covidBase: String,
+         ipAPIBase: String,
+         ipAPIKey: String,
+         newsBase: String,
+         newsAPIKey: String,
+         cache: MemoryStorage<String, Any>?,
+         httpClient: HTTPClient) {
+
         self.ipAddress = ipAddress
         self.covidBase = covidBase
         self.ipAPIBase = ipAPIBase
         self.ipAPIKey = ipAPIKey
         self.newsBase = newsBase
         self.newsAPIKey = newsAPIKey
+        self.cache = cache
         self.httpClient = httpClient
     }
 
@@ -38,42 +49,66 @@ class Client {
         }
     }
 
+    private func get<T: Decodable>(at url: String, expiry: Expiry = .never) -> EventLoopFuture<T> {
+        guard let response = try? cache?.object(forKey: url) as? T else {
+            return httpClient.get(url: url).decode().always { result in
+                guard case .success(let response) = result else { return }
+                self.cache?.setObject(response, forKey: url, expiry: expiry)
+            }
+        }
+        return httpClient.eventLoopGroup.future(response)
+    }
+
+    private func ip<T: Decodable>(_ path: String, expiry: Expiry = .never) -> EventLoopFuture<T> {
+        return get(at: "\(ipAPIBase)/\(path)", expiry: expiry)
+    }
+
+    private func covid<T: Decodable>(_ path: String, expiry: Expiry = .never) -> EventLoopFuture<T> {
+        return get(at: "\(covidBase)/\(path)", expiry: expiry)
+    }
+
+    private func news<T: Decodable>(_ path: String, expiry: Expiry = .never) -> EventLoopFuture<T> {
+        return get(at: "\(newsBase)/\(path)", expiry: expiry)
+    }
+}
+
+extension Client {
     func all() -> EventLoopFuture<World> {
-        return httpClient.get(url: "\(covidBase)/v2/all").decode()
+        return covid("v2/all", expiry: .hours(2))
     }
 
     func countries() -> EventLoopFuture<[Country]> {
-        return httpClient.get(url: "\(covidBase)/v2/countries").decode()
+        return covid("v2/countries", expiry: .hours(2))
     }
 
     func continents() -> EventLoopFuture<[Continent]> {
-        return httpClient.get(url: "\(covidBase)/v2/continents").decode()
+        return covid("v2/continents", expiry: .pseudoDays(1))
     }
 
     func locateUser() -> EventLoopFuture<GeoLocated?> {
         guard let ipAddress = ipAddress else { return httpClient.eventLoopGroup.future(nil) }
-        return httpClient.get(url: "\(ipAPIBase)/ipgeo?apiKey=\(ipAPIKey)&ip=\(ipAddress)").decodeOptional()
+        return ip("ipgeo?apiKey=\(ipAPIKey)&ip=\(ipAddress)", expiry: .pseudoDays(7)).flatMapErrorThrowing { _ in nil }
     }
 
     func stories() -> EventLoopFuture<News> {
-        return httpClient.get(url: "\(newsBase)/top-headlines?q=corona&apiKey=\(newsAPIKey)").decode()
+        return news("top-headlines?q=corona&apiKey=\(newsAPIKey)", expiry: .minutes(15))
     }
 
     func stories(country: String) -> EventLoopFuture<News> {
-        return httpClient.get(url: "\(newsBase)/top-headlines?q=corona&apiKey=\(newsAPIKey)&country=\(country)").decode()
+        return news("top-headlines?q=corona&apiKey=\(newsAPIKey)&country=\(country)", expiry: .minutes(15))
     }
 
     func country(identifier: Identifier<Country>) -> EventLoopFuture<Country> {
-        return httpClient.get(url: "\(covidBase)/v2/countries/\(identifier: identifier)").decode()
+        return covid("v2/countries/\(identifier: identifier)", expiry: .hours(2))
     }
 
     func continent(identifier: Identifier<Continent>) -> EventLoopFuture<DetailedContinent> {
-        return httpClient.get(url: "\(covidBase)/v2/continents/\(identifier: identifier)").decode()
+        return covid("v2/continents/\(identifier: identifier)", expiry: .pseudoDays(1))
     }
 
     func countries(identifiers: [Identifier<Country>]) -> EventLoopFuture<[Country]> {
         if identifiers.count > 1 {
-            return httpClient.get(url: "\(covidBase)/v2/countries/\(identifiers: identifiers)").decode()
+            return covid("v2/countries/\(identifiers: identifiers)", expiry: .hours(2))
         } else if let identifier = identifiers.first {
             return country(identifier: identifier).map { [$0] }
         } else {
@@ -82,17 +117,15 @@ class Client {
     }
 
     func historicalData() -> EventLoopFuture<[HistoricalData]> {
-        return httpClient.get(url: "\(covidBase)/v2/historical?lastdays=all").decode()
+        return covid("v2/historical?lastdays=all", expiry: .hours(2))
     }
 
     func timeline() -> EventLoopFuture<Timeline> {
-        return httpClient.get(url: "\(covidBase)/v2/historical/all?lastdays=all").decode()
+        return covid("v2/historical/all?lastdays=all", expiry: .hours(2))
     }
 
     func timeline<T : Identifiable>(for identifier: Identifier<T>) -> EventLoopFuture<TimelineWrapper> {
-        return httpClient
-            .get(url: "\(covidBase)/v2/historical/\(identifier: identifier)?lastdays=all")
-            .decode()
+        return covid("v2/historical/\(identifier: identifier)?lastdays=all", expiry: .hours(2))
     }
 }
 
@@ -118,11 +151,7 @@ extension Identifier {
 
 extension EventLoopFuture where Value == HTTPClient.Response {
 
-    func decodeOptional<T: Decodable>() -> EventLoopFuture<T?> {
-        return decode(type: T?.self).flatMapErrorThrowing { _ in nil }
-    }
-
-    func decode<T: Decodable>(type: T.Type = T.self) -> EventLoopFuture<T> {
+    fileprivate func decode<T: Decodable>(type: T.Type = T.self) -> EventLoopFuture<T> {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         return flatMapThrowing { response in
@@ -143,4 +172,19 @@ extension EventLoopFuture where Value == HTTPClient.Response {
         }
     }
 
+}
+
+extension Expiry {
+    // Since a day is technically not a measure of time but a measure of the calendar
+    static func pseudoDays(_ days: TimeInterval) -> Expiry {
+        return .hours(days * 24)
+    }
+
+    static func hours(_ hr: TimeInterval) -> Expiry {
+        return .minutes(hr * 60)
+    }
+
+    static func minutes(_ min: TimeInterval) -> Expiry {
+        return .seconds(min * 60)
+    }
 }

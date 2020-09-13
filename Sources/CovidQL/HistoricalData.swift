@@ -20,15 +20,30 @@ class Timeline: Decodable, GraphQLObject {
         }
     }
 
+    class DataPointsCollection: GraphQLObject {
+        let connection: PagingArray<DataPoint>
+
+        init(values: [DataPoint]) {
+            self.connection = PagingArray(values: values)
+        }
+
+        func graph(numberOfPoints: Int = 30, since: Date = Date.distantPast) -> [DataPoint] {
+            guard numberOfPoints > 0 else { return [] }
+            let values = connection.values.filter { $0.date > since }
+            let distanceBetweenPoints = Int(ceil(Double(values.count) / Double(numberOfPoints)))
+            return values.indices.filter { (values.count - $0 - 1) % distanceBetweenPoints == 0 }.map { values[$0] }
+        }
+    }
+
     enum CodingKeys: String, CodingKey {
         case cases
         case deaths
         case recovered
     }
 
-    let cases: [DataPoint]
-    let deaths: [DataPoint]
-    let recovered: [DataPoint]
+    let cases: DataPointsCollection
+    let deaths: DataPointsCollection
+    let recovered: DataPointsCollection
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -40,9 +55,10 @@ class Timeline: Decodable, GraphQLObject {
 
 extension KeyedDecodingContainer {
 
-    fileprivate func decodeDataPoints(forKey key: K) throws -> [Timeline.DataPoint] {
+    fileprivate func decodeDataPoints(forKey key: K) throws -> Timeline.DataPointsCollection {
         let dictionary = try decodeIfPresent([String : IntIsh].self, forKey: key) ?? [:]
-        return dictionary.map { Timeline.DataPoint(key: $0.key, value: $0.value.value) }.sorted { $0.date < $1.date }
+        let values = dictionary.map { Timeline.DataPoint(key: $0.key, value: $0.value.value) }.sorted { $0.date < $1.date }
+        return Timeline.DataPointsCollection(values: values)
     }
 
 }
@@ -52,13 +68,17 @@ class TimelineWrapper: Decodable {
 }
 
 class HistoricalData: Decodable, GraphQLObject {
-    @Ignore
-    var country: Identifier<Country>?
+    enum CodingKeys: String, CodingKey {
+        case countryIdentifier = "country"
+        case timeline
+    }
+
+    let countryIdentifier: Identifier<Country>?
 
     let timeline: Timeline
 
     func country(client: Client) throws -> EventLoopFuture<Country> {
-        guard let country = country else { throw Client.Error.emptyResponse }
-        return client.country(identifier: country)
+        guard let countryIdentifier = countryIdentifier else { throw Client.Error.emptyResponse }
+        return client.country(identifier: countryIdentifier)
     }
 }
