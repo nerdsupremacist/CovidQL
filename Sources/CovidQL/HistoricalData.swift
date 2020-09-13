@@ -10,13 +10,14 @@ private let dateFormatter: DateFormatter = {
 }()
 
 class Timeline: Decodable, GraphQLObject {
-    class DataPoint: GraphQLObject {
+    class DataPoint: NSObject, GraphQLObject {
         let date: Date
         let value: Int
 
         init(key: String, value: Int) {
             date = dateFormatter.date(from: key)!
             self.value = value
+            super.init()
         }
     }
 
