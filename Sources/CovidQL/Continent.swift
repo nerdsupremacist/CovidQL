@@ -42,7 +42,7 @@ class DetailedContinent: Continent {
         try super.init(from: decoder)
     }
 
-    func countries(client: Client) throws -> EventLoopFuture<[Country]> {
-        return client.countries(identifiers: countryIdentifiers)
+    func countries(client: Client) throws -> EventLoopFuture<PagingArray<Country>> {
+        return client.countries(identifiers: countryIdentifiers).map { PagingArray(values: $0) }
     }
 }
