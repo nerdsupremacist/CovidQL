@@ -12,7 +12,7 @@ let package = Package(
             targets: ["CovidQL"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/nerdsupremacist/GraphZahl.git", from: "0.1.0-alpha.35"),
+        .package(url: "https://github.com/nerdsupremacist/GraphZahl.git", from: "0.1.0-alpha.38"),
         .package(url: "https://github.com/nerdsupremacist/graphzahl-vapor-support.git", from: "0.1.0-alpha.7"),
         .package(url: "https://github.com/nerdsupremacist/Cache.git", .branch("master")),
     ],

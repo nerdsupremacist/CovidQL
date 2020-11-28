@@ -21,20 +21,10 @@ struct EmptyStringIsNil<Value: Decodable> : Decodable {
 
 extension EmptyStringIsNil: Resolvable where Value: Resolvable { }
 
-extension EmptyStringIsNil: OutputResolvable where Value: OutputResolvable {
-    static var additionalArguments: [String : InputResolvable.Type] {
-        return Value.additionalArguments
-    }
+extension EmptyStringIsNil: OutputResolvable where Value: OutputResolvable { }
 
-    static func reference(using context: inout Resolution.Context) throws -> GraphQLOutputType {
-        return try context.reference(for: Value?.self)
-    }
-
-    static func resolve(using context: inout Resolution.Context) throws -> GraphQLOutputType {
-        return try context.resolve(type: Value?.self)
-    }
-
-    func resolve(source: Any, arguments: [String : Map], context: MutableContext, eventLoop: EventLoopGroup) throws -> EventLoopFuture<Any?> {
-        return try wrappedValue?.resolve(source: source, arguments: arguments, context: context, eventLoop: eventLoop) ?? eventLoop.future(nil)
+extension EmptyStringIsNil: DelegatedOutputResolvable where Value: OutputResolvable {
+    func resolve(source: Any, arguments: [String : Map], context: MutableContext, eventLoop: EventLoopGroup) throws -> some OutputResolvable {
+        return wrappedValue
     }
 }
