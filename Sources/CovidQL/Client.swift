@@ -50,7 +50,9 @@ class Client {
     }
 
     private func get<T: Decodable>(at url: String, expiry: Expiry = .never) -> EventLoopFuture<T> {
-        guard let response = try? cache?.object(forKey: url) as? T else {
+        guard let cache = cache,
+              let response = cache.nonExpiredObject(url) as? T else {
+
             return httpClient.get(url: url).decode().always { result in
                 guard case .success(let response) = result else { return }
                 self.cache?.setObject(response, forKey: url, expiry: expiry)
@@ -187,4 +189,15 @@ extension Expiry {
     static func minutes(_ min: TimeInterval) -> Expiry {
         return .seconds(min * 60)
     }
+}
+
+extension StorageAware {
+
+    func nonExpiredObject(_ key: Key) -> Value? {
+        guard let entry = try? self.entry(forKey: key), !entry.expiry.isExpired else {
+            return nil
+        }
+        return entry.object
+    }
+
 }
