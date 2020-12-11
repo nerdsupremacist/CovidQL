@@ -10,13 +10,26 @@ private let dateFormatter: DateFormatter = {
 }()
 
 class Timeline: Decodable, GraphQLObject {
-    class DataPoint: NSObject, GraphQLObject {
+    fileprivate struct SingleDataPoint {
         let date: Date
         let value: Int
 
         init(key: String, value: Int) {
             date = dateFormatter.date(from: key)!
             self.value = value
+        }
+    }
+
+    class DataPoint: NSObject, GraphQLObject {
+        let date: Date
+        let value: Int
+        let change: Int
+
+        fileprivate init(current: SingleDataPoint, previous: SingleDataPoint?) {
+            self.date = current.date
+            self.value = current.value
+            self.change = current.value - (previous?.value ?? 0)
+
             super.init()
         }
     }
@@ -58,8 +71,28 @@ extension KeyedDecodingContainer {
 
     fileprivate func decodeDataPoints(forKey key: K) throws -> Timeline.DataPointsCollection {
         let dictionary = try decodeIfPresent([String : IntIsh].self, forKey: key) ?? [:]
-        let values = dictionary.map { Timeline.DataPoint(key: $0.key, value: $0.value.value) }.sorted { $0.date < $1.date }
+        let values = dictionary
+            .map { Timeline.SingleDataPoint(key: $0.key, value: $0.value.value) }
+            .sorted { $0.date < $1.date }
+            .zipWithPrevious()
+            .map { Timeline.DataPoint(current: $0.current, previous: $0.previous) }
+
         return Timeline.DataPointsCollection(values: values)
+    }
+
+}
+
+extension Collection {
+
+    func zipWithPrevious() -> [(previous: Element?, current: Element)] {
+        return indices.map { index in
+            let before = self.index(index, offsetBy: -1)
+            if before < startIndex {
+                return (nil, self[index])
+            } else {
+                return (self[before], self[index])
+            }
+        }
     }
 
 }
