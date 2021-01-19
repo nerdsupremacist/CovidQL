@@ -20,7 +20,7 @@ class Timeline: Decodable, GraphQLObject {
         }
     }
 
-    class DataPoint: NSObject, GraphQLObject {
+    class DataPoint: GraphQLObject {
         let date: Date
         let value: Int
         let change: Int
@@ -29,8 +29,6 @@ class Timeline: Decodable, GraphQLObject {
             self.date = current.date
             self.value = current.value
             self.change = current.value - (previous?.value ?? 0)
-
-            super.init()
         }
     }
 
