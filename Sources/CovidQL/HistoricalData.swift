@@ -39,10 +39,9 @@ class Timeline: Decodable, GraphQLObject {
             self.connection = PagingArray(values: values)
         }
 
-        func graph(numberOfPoints: Int = 30, since: Date?) -> [DataPoint] {
+        func graph(numberOfPoints: Int = 30) -> [DataPoint] {
             guard numberOfPoints > 0 else { return [] }
-            let since = since ?? .distantPast
-            let values = connection.values.filter { $0.date > since }
+            let values = connection.values
             let distanceBetweenPoints = Int(ceil(Double(values.count) / Double(numberOfPoints)))
             return values.indices.filter { (values.count - $0 - 1) % distanceBetweenPoints == 0 }.map { values[$0] }
         }
