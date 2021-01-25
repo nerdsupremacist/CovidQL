@@ -74,4 +74,9 @@ class Country: DetailedAffected, Identifiable {
     func news(client: Client) -> EventLoopFuture<[NewsStory]> {
         return client.stories(country: info.iso2 ?? name).map { $0.articles }
     }
+
+    func geometry(client: Client) -> EventLoopFuture<GeographicalGeometry?> {
+        guard let iso3 = info.iso3 else { return client.eventLoop.future(nil) }
+        return client.geometry(for: iso3)
+    }
 }

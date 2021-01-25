@@ -26,6 +26,7 @@ extension Client {
                       ipAPIKey: "eee9c9c23de44033a19b44be776e3a42",
                       newsBase: newsBase,
                       newsAPIKey: "8189f8976f2846ee8985371ff84d580a",
+                      featuresUrl: "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json",
                       cache: cache,
                       httpClient: HTTPClient(eventLoopGroupProvider: .shared(clientEventLoop)))
     }

@@ -15,6 +15,7 @@ class Client {
     private let ipAPIKey: String
     private let newsBase: String
     private let newsAPIKey: String
+    private let featuresUrl: String
     private let cache: MemoryStorage<String, Any>?
     private let httpClient: HTTPClient
 
@@ -28,6 +29,7 @@ class Client {
          ipAPIKey: String,
          newsBase: String,
          newsAPIKey: String,
+         featuresUrl: String,
          cache: MemoryStorage<String, Any>?,
          httpClient: HTTPClient) {
 
@@ -37,6 +39,7 @@ class Client {
         self.ipAPIKey = ipAPIKey
         self.newsBase = newsBase
         self.newsAPIKey = newsAPIKey
+        self.featuresUrl = featuresUrl
         self.cache = cache
         self.httpClient = httpClient
     }
@@ -130,6 +133,12 @@ extension Client {
 
     func timeline<T : Identifiable>(for identifier: Identifier<T>) -> EventLoopFuture<TimelineWrapper> {
         return covid("v2/historical/\(identifier: identifier)?lastdays=all", expiry: .hours(2))
+    }
+
+    func geometry(for iso3: String) -> EventLoopFuture<GeographicalGeometry?> {
+        return get(at: featuresUrl, expiry: .pseudoDays(30)).map { (collection: FeatureCollection) in
+            return collection.countries[iso3.uppercased()]
+        }
     }
 }
 
