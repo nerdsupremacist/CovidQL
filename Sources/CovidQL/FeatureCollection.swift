@@ -3,14 +3,14 @@ import Foundation
 import GraphZahl
 
 final class Coordinates: GraphQLObject, Decodable {
-    let latitude: Double
     let longitude: Double
+    let latitude: Double
 
     required init(from decoder: Decoder) throws {
         let values = try Array<Double>(from: decoder)
         assert(values.count == 2)
-        latitude = values[0]
-        longitude = values[1]
+        longitude = values[0]
+        latitude = values[1]
     }
 }
 
